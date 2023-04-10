@@ -1,18 +1,19 @@
-## GiveMeTheTitle
+# GiveMeTheTitle
+
+## Components
 
 These are the main components of our project:
 | Type | Component | Description |
 | --------------- | --------------- | --------------- |
 | Auth    | Account  | Fetch and Update user's profile data from the Supabase databse.   |
-|    |   |    |
-|     |    |    |
 
-# Project Sturucture
+## Project Sturucture
 
 ```bash
 src
 ├── components
 │   └── Account
+│
 └── pages
     ├── _app
     ├── enter
