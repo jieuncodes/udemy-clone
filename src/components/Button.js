@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { cls } from "../../libs/utils";
+import { cls } from "../libs/utils";
 
 export default function Button({ text, icon, submitButton = false }) {
   return (
