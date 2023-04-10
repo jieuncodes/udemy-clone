@@ -1,9 +1,18 @@
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
+import { useState } from "react";
 import "../styles/globals.css";
 
 export default function App({ Component, pageProps }) {
+  const [supabase] = useState(() => createBrowserSupabaseClient());
   return (
-    <div className="w-full max-w-xl mx-auto">
-      <Component {...pageProps} />
-    </div>
+    <SessionContextProvider
+      supabaseClient={supabase}
+      initialSession={pageProps.initialSession}
+    >
+      <div className="w-full max-w-xl mx-auto">
+        <Component {...pageProps} />
+      </div>
+    </SessionContextProvider>
   );
 }
