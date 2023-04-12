@@ -16,4 +16,8 @@
   }
 }
 
+.custom-focus-ring:focus {
+  @apply border-none outline-none ring-[1.5px] ring-rose-500;
+}
+
 body {}

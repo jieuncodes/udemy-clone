@@ -4,13 +4,14 @@ import { useState } from "react";
 import "../styles/globals.css";
 
 export default function App({ Component, pageProps }) {
-  const [supabase] = useState(() => createBrowserSupabaseClient());
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+
   return (
     <SessionContextProvider
-      supabaseClient={supabase}
+      supabaseClient={supabaseClient}
       initialSession={pageProps.initialSession}
     >
-      <div className="w-full max-w-xl mx-auto">
+      <div>
         <Component {...pageProps} />
       </div>
     </SessionContextProvider>

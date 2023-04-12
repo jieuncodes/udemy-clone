@@ -6,14 +6,12 @@ import Button from "../components/Button";
 import Link from "next/link";
 import {
   ContentBox,
-  ContentHeader,
   FormBox,
   FormDescriptions,
-  Hr,
-  HrefBox,
   Input,
   Notification,
 } from "../styles/authPage";
+import { Container, ContentHeader, Hr, HrefBox } from "../styles/globalStyles";
 
 const Join = () => {
   const router = useRouter();
@@ -28,15 +26,13 @@ const Join = () => {
   const onValid = async (data) => {
     const { email, password } = data;
     console.log(data);
-    const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
-      {
-        email,
-        password,
-      }
-    );
-    if (signUpError) {
-      console.error("Error signing in:", signUpError.message);
-      setSignUpError(signUpError.message);
+    const { data: signUpData, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+    if (error) {
+      console.error("Error signing in:", error.message);
+      setSignUpError(error.message);
     } else {
       reset();
       setSignUpError(null);
@@ -45,7 +41,7 @@ const Join = () => {
   };
 
   return (
-    <>
+    <Container>
       {!session && (
         <ContentBox>
           <ContentHeader>가입하여 학습 시작</ContentHeader>
@@ -80,7 +76,7 @@ const Join = () => {
           </FormBox>
         </ContentBox>
       )}
-    </>
+    </Container>
   );
 };
 

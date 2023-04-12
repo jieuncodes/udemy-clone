@@ -6,24 +6,27 @@ import Button from "../components/Button";
 import Link from "next/link";
 import {
   ContentBox,
-  ContentHeader,
   FormBox,
   FormDescriptions,
   SocialBtns,
   Input,
-  HrefBox,
-  Hr,
   Notification,
 } from "../styles/authPage";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { Container, ContentHeader, Hr, HrefBox } from "../styles/globalStyles";
 
 const Enter = () => {
+  const supabase = useSupabaseClient();
   const router = useRouter();
   const isFromJoin = router.query.fromJoin;
   const [session, setSession] = useState(null);
+  const [signInError, setSignInError] = useState(null);
+
   const { register, handleSubmit, reset } = useForm();
 
   supabase.auth.onAuthStateChange(async (event, session) => {
     setSession(session);
+    console.log("session", session);
     console.log("event", event);
     if (event === "SIGNED_IN") {
       router.push("/dashboard");
@@ -32,43 +35,60 @@ const Enter = () => {
 
   const onSubmit = async (data) => {
     const { email, password } = data;
-    const { error } = await supabase.auth.signIn({ email, password });
+    const { data: signInData, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
     console.log("data", data);
+    console.log("", signInData);
     if (error) {
       console.error("Error signing in:", error.message);
+      setSignInError(error.message);
     } else {
       reset();
+      setSignInError(null);
     }
   };
 
   return (
-    <>
+    <Container>
       {!session && (
         <ContentBox>
           <ContentHeader>계정에 로그인하세요</ContentHeader>
           <SocialBtns className="mt-5">
-            <Button text={"Google로 계속하기"} icon="/images/google-logo.png" />
+            <Button
+              text={"Google로 계속하기"}
+              icon="/assets/images/google-logo.png"
+            />
             <Button
               text={"Facebook으로 계속하기"}
-              icon="/images/facebook-logo.png"
+              icon="/assets/images/facebook-logo.png"
             />
-            <Button text={"Apple로 계속하기"} icon="/images/apple-logo.png" />
+            <Button
+              text={"Apple로 계속하기"}
+              icon="/assets/images/apple-logo.png"
+            />
           </SocialBtns>
           {isFromJoin && (
             <Notification>
               A verification link has been sent to your email.
             </Notification>
           )}
+          {signInError && (
+            <Notification>
+              <span>{signInError}</span>
+            </Notification>
+          )}
           <FormBox>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Input
-                register={register("email", { required: true })}
+                {...register("email", { required: true })}
                 placeholder="이메일"
                 type="email"
                 required
               ></Input>
               <Input
-                register={register("password", { required: true })}
+                {...register("password", { required: true })}
                 placeholder="비밀번호"
                 type="password"
                 required
@@ -92,7 +112,7 @@ const Enter = () => {
           </FormDescriptions>
         </ContentBox>
       )}
-    </>
+    </Container>
   );
 };
 

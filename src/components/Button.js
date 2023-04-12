@@ -5,9 +5,9 @@ export default function Button({ text, icon, submitButton = false }) {
   return (
     <button
       className={cls(
-        "w-full h-16 mb-3 px-4 border-solid border-[1px] border-black font-medium text-lg flex items-center",
+        "mb-3 flex h-16 w-full items-center border-[1px] border-solid border-black px-6 text-lg font-medium",
         submitButton
-          ? "h-14 bg-rose-500 text-white border-none justify-center"
+          ? "h-14 w-full justify-center border-none bg-rose-500 text-white"
           : ""
       )}
     >
