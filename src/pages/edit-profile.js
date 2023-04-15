@@ -2,13 +2,18 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { Container, ContentHeader } from "../styles/globalStyles";
 import {
   Avatar,
-  ContentDescription,
+  EditBody,
   EditBox,
+  EditDescription,
+  EditHeader,
+  EditTitle,
   Li,
   Nav,
   UserName,
-} from "../styles/dashBoard";
+} from "../styles/editProfile";
 import { useState } from "react";
+import Router from "next/router";
+import ProfileEditForm from "../components/ProfileEditForm";
 
 const EditProfile = () => {
   const user = useUser();
@@ -36,7 +41,12 @@ const EditProfile = () => {
             {menuItems.map((item, index) => (
               <Li
                 key={index}
-                onClick={() => setSelectedLi(item)}
+                onClick={() => {
+                  setSelectedLi(item);
+                  if (item == "공개 프로필 보기") {
+                    Router.push("/dashboard");
+                  }
+                }}
                 isSelected={selectedLi === item}
               >
                 {item}
@@ -46,13 +56,13 @@ const EditProfile = () => {
         </Nav>
         {selectedLi && (
           <EditBox>
-            <div>
-              <ContentHeader>{selectedLi}</ContentHeader>
-              <ContentDescription>
-                {menuDescriptions[selectedLi]}
-              </ContentDescription>
-            </div>
-            <div></div>
+            <EditHeader>
+              <EditTitle>{selectedLi}</EditTitle>
+              <EditDescription>{menuDescriptions[selectedLi]}</EditDescription>
+            </EditHeader>
+            <EditBody>
+              {selectedLi == "프로필" ? <ProfileEditForm /> : null}
+            </EditBody>
           </EditBox>
         )}
       </Container>
