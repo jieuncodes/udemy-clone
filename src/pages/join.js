@@ -24,21 +24,31 @@ const Join = () => {
   };
 
   const onValid = async (data) => {
-    const { email, password } = data;
+    const { username, email, password } = data;
     console.log(data);
-    const { data: signUpData, error } = await supabase.auth.signUp({
+    const { user, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
     });
-    if (error) {
-      console.error("Error signing in:", error.message);
-      setSignUpError(error.message);
+    if (signUpError) {
+      console.error("Error signing up:", signUpError.message);
+      setSignUpError(signUpError.message);
+    } else if (!user) {
+      console.error("Error signing up: no user object returned");
+      setSignUpError("An unknown error occurred");
     } else {
+      const { error: profileError } = await supabase
+        .from("user_profile")
+        .insert({ id: user.id, username });
+      if (profileError) {
+        console.error("Error creating user profile:", profileError.message);
+      }
       reset();
       setSignUpError(null);
       router.push("/enter?fromJoin=true");
     }
   };
+  
 
   return (
     <Container>
@@ -52,6 +62,11 @@ const Join = () => {
           )}
           <FormBox>
             <form onSubmit={handleSubmit(onValid, onError)}>
+              <Input
+                {...register("username", { required: true })}
+                placeholder="유저네임"
+                type="text"
+              ></Input>
               <Input
                 {...register("email", { required: true })}
                 placeholder="이메일"

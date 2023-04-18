@@ -20,10 +20,10 @@ const EditProfile = () => {
   const [selectedLi, setSelectedLi] = useState("");
 
   console.log("user", user);
-  const menuItems = ["공개 프로필 보기", "프로필", "사진", "구독", "결제 방법"];
+  const menuItems = ["공개 프로필 보기", "계정", "사진", "구독", "결제 방법"];
   const menuDescriptions = {
     "공개 프로필 보기": "",
-    프로필: "본인에 대한 정보 추가",
+    계정: "계정 설정을 변경할 수 있습니다",
     사진: "프로필에 사용할 사진을 추가하세요",
     "등록한 강의": "강의 관리",
     "결제 방법": "결제 방법을 선택하세요",
@@ -35,7 +35,7 @@ const EditProfile = () => {
         <Avatar>
           <img src="/assets/images/anon_avatar.webp" />
         </Avatar>
-        <UserName>username</UserName>
+        <UserName>유저네임</UserName>
         <Nav>
           <ul>
             {menuItems.map((item, index) => (
@@ -47,7 +47,7 @@ const EditProfile = () => {
                     Router.push("/dashboard");
                   }
                 }}
-                isSelected={selectedLi === item}
+                style={item==selectedLi ? { backgroundColor: 'gray', color: 'white' } : null}
               >
                 {item}
               </Li>
@@ -61,7 +61,7 @@ const EditProfile = () => {
               <EditDescription>{menuDescriptions[selectedLi]}</EditDescription>
             </EditHeader>
             <EditBody>
-              {selectedLi == "프로필" ? <ProfileEditForm /> : null}
+              {selectedLi == "계정" ? <ProfileEditForm /> : null}
             </EditBody>
           </EditBox>
         )}
