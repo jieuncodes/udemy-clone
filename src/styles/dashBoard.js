@@ -11,5 +11,5 @@ export const Li = styled.li`
   cursor: pointer;
   ${({ isSelected }) => isSelected && "bg-slate-500 text-white"}
 `;
-export const EditBox = tw.div`grid grid-rows-2 mt-6 pt-6 border-[1px] border-solid border-slate-500 divide-y divide-slate-500 w-full text-center`;
+export const EditBox = tw.div`grid grid-rows-[200px_auto] mt-6 pt-6 border-[1px] border-solid border-slate-300 divide-y divide-slate-500 w-full text-center`;
 export const ContentDescription = tw.span``;

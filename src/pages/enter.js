@@ -93,7 +93,7 @@ const Enter = () => {
                 type="password"
                 required
               ></Input>
-              <Button text={"로그인"} submitButton />
+              <Button text={"로그인"} roseBtn />
             </form>
           </FormBox>
 

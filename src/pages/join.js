@@ -48,7 +48,6 @@ const Join = () => {
       router.push("/enter?fromJoin=true");
     }
   };
-  
 
   return (
     <Container>
@@ -77,7 +76,7 @@ const Join = () => {
                 placeholder="비밀번호"
                 type="password"
               ></Input>
-              <Button text={"가입하기"} submitButton />
+              <Button text={"가입하기"} roseBtn />
             </form>
             <FormDescriptions>
               <Hr />
